@@ -4,7 +4,7 @@ import java.util.*;
 import java.lang.*;
 
 @SuppressWarnings("unchecked")
-class hashTable <Key, Value> {
+class hashTable_1 <Key, Value> {
 
 	private static final int TABLE_SIZE = 128;
 
@@ -15,11 +15,11 @@ class hashTable <Key, Value> {
 	private int[] hash;
 	private Value[] value;
 
-	public hashTable() {
+	public hashTable_1() {
 		this(TABLE_SIZE);
 	}
 
-	public hashTable(int size) {
+	public hashTable_1(int size) {
 		n_elem = 0;
 		this.size = size;
 		key = (Key[]) new Object[size];
@@ -56,7 +56,7 @@ class hashTable <Key, Value> {
 	}
 
 	private void resize(int size) {
-		hashTable<Key, Value> temp = new hashTable<Key, Value>(size);
+		hashTable_1<Key, Value> temp = new hashTable_1<Key, Value>(size);
 		for (int i = 0; i < size; i++) {
 			if (key[i] != null) {
 				temp.putValue(key[i], value[i]);
@@ -114,7 +114,6 @@ class hashTable <Key, Value> {
 		
 		// double table size if 50% full
 		if (n_elem >= size/2) resize(2*size);
-System.out.println("key: " + k + " hash: " + hash(k));
 		int i;
 		int countProbes = 0;
 		for (i = hash(k); key[i] != null; i = (i + 1) % size) {
@@ -165,7 +164,7 @@ System.out.println("key: " + k + " hash: " + hash(k));
 			// System.out.println(sc.nextLine());
 		}
 
-		hashTable <String, Integer> h = new hashTable<String, Integer>();
+		hashTable_1 <String, Integer> h = new hashTable_1<String, Integer>();
 		
 		String key = "";
 
@@ -176,7 +175,7 @@ System.out.println("key: " + k + " hash: " + hash(k));
 		}
 
 		for (String s: h.keyList()){
-			System.out.println(s + " " + Integer.toString(h.getHash(s))/*h.getValue(s)*/);	
+			System.out.println(s + " " + Integer.toString(h.getHash(s)));	
 		}
 
 	} 
