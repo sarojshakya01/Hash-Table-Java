@@ -266,34 +266,60 @@ class hashTable {
 		
 		hashTable h = new hashTable(128); // Create Hash table with capacity 128
 
-		int minProbe = h.getCapacity();;
-		int maxProbe = 0;
-		int sumProbe = 0;
+		int fminProbe = h.getCapacity();
+		int lminProbe = h.getCapacity();
+		int fmaxProbe = 0;
+		int lmaxProbe = 0;
+		int fsumProbe = 0;
+		int lsumProbe = 0;
 
+		int capacity = 0;
+		String [] last30 = new String [30];
+		String [] first30 = new String [30];
+		
 		// OPTION C(A)
+		capacity = (int)(h.getCapacity()*0.5);
 		System.out.println("\nSolution of OPTION C(A)\n");
-		for (i = 0; i < h.getCapacity()*0.5; i++) {
+		for (i = 0; i < capacity; i++) {
 			key = list[i];
 			h.putValue(key, i+1);
+
+			if (i < 30) {
+				first30[i] = key;
+			}
+
+			if ((capacity - i) <= 30) {
+				last30[30 - (capacity - i)] = key;
+			}
 		}
 
-		i = 0; // reset the var
-
-		for (String s: h.getKeyList()){
-			i++;
-			if (h.getProbe(s) < minProbe) {
-				minProbe = h.getProbe(s);
+		for (int k = 0; k < 30; k++) {
+			String f = first30[k];
+			String l = last30[k];
+			if (h.getProbe(f) < fminProbe) {
+				fminProbe = h.getProbe(f);
 			}
-			if (h.getProbe(s) > maxProbe) {
-				maxProbe = h.getProbe(s);
+			if (h.getProbe(l) < lminProbe) {
+				lminProbe = h.getProbe(l);
 			}
-			sumProbe = sumProbe + h.getProbe(s);
-			if (i == 30) break;
+			if (h.getProbe(f) > fmaxProbe) {
+				fmaxProbe = h.getProbe(f);
+			}
+			if (h.getProbe(l) > lmaxProbe) {
+				lmaxProbe = h.getProbe(l);
+			}
+			fsumProbe = fsumProbe + h.getProbe(f);
+			lsumProbe = lsumProbe + h.getProbe(l);
 		}
 
-		System.out.println("Minimum Probe: " + minProbe);
-		System.out.println("Maximum Probe: " + maxProbe);
-		System.out.println("Average Probe: " + String.format("%.3g%n", (float)sumProbe/30));
+		System.out.println("For first 30 inserted Keys\n");
+		System.out.println("Minimum Probe: " + fminProbe);
+		System.out.println("Maximum Probe: " + fmaxProbe);
+		System.out.println("Average Probe: " + String.format("%.3g%n", (float)fsumProbe/30));
+		System.out.println("For last 30 inserted Keys\n");
+		System.out.println("Minimum Probe: " + lminProbe);
+		System.out.println("Maximum Probe: " + lmaxProbe);
+		System.out.println("Average Probe: " + String.format("%.3g%n", (float)lsumProbe/30));
 		
 		System.out.println(String.format("%-6s","S.N.") + String.format("%-17s","Key") + String.format("%-14s", "Init. Hash") + String.format("%-14s", "Hash/Index") + String.format("%-3s","Probe"));
 		for (String s: h.getKeyList()){
@@ -301,34 +327,57 @@ class hashTable {
 		}
 
 		// OPTION C(B)
+		capacity = (int)(h.getCapacity()*0.9);
 		h.resetTable();
 		System.out.println("\nSolution of OPTION C(B)\n");
-		for (i = 0; i < h.getCapacity()*0.9; i++) {
+		for (i = 0; i < capacity; i++) {
 			key = list[i];
 			h.putValue(key, i+1);
+
+			if (i < 30) {
+				first30[i] = key;
+			}
+
+			if ((capacity - i) <= 30) {
+				last30[30 - (capacity - i)] = key;
+			}
 		}
 
 		// reset the variable
-		i = 0;
-		minProbe = h.getCapacity();;
-		maxProbe = 0;
-		sumProbe = 0;
+		fminProbe = h.getCapacity();
+		lminProbe = h.getCapacity();
+		fmaxProbe = 0;
+		lmaxProbe = 0;
+		fsumProbe = 0;
+		lsumProbe = 0;
 
-		for (String s: h.getKeyList()){
-			i++;
-			if (h.getProbe(s) < minProbe) {
-				minProbe = h.getProbe(s);
+		for (int k = 0; k < 30; k++) {
+			String f = first30[k];
+			String l = last30[k];
+			if (h.getProbe(f) < fminProbe) {
+				fminProbe = h.getProbe(f);
 			}
-			if (h.getProbe(s) > maxProbe) {
-				maxProbe = h.getProbe(s);
+			if (h.getProbe(l) < lminProbe) {
+				lminProbe = h.getProbe(l);
 			}
-			sumProbe = sumProbe + h.getProbe(s);
-			if (i == 30) break;
+			if (h.getProbe(f) > fmaxProbe) {
+				fmaxProbe = h.getProbe(f);
+			}
+			if (h.getProbe(l) > lmaxProbe) {
+				lmaxProbe = h.getProbe(l);
+			}
+			fsumProbe = fsumProbe + h.getProbe(f);
+			lsumProbe = lsumProbe + h.getProbe(l);
 		}
 
-		System.out.println("Minimum Probe: " + minProbe);
-		System.out.println("Maximum Probe: " + maxProbe);
-		System.out.println("Average Probe: " + String.format("%.3g%n", (float)sumProbe/30));
+		System.out.println("For first 30 inserted Keys\n");
+		System.out.println("Minimum Probe: " + fminProbe);
+		System.out.println("Maximum Probe: " + fmaxProbe);
+		System.out.println("Average Probe: " + String.format("%.3g%n", (float)fsumProbe/30));
+		System.out.println("For last 30 inserted Keys\n");
+		System.out.println("Minimum Probe: " + lminProbe);
+		System.out.println("Maximum Probe: " + lmaxProbe);
+		System.out.println("Average Probe: " + String.format("%.3g%n", (float)lsumProbe/30));
 
 		System.out.println(String.format("%-6s","S.N.") + String.format("%-17s","Key") + String.format("%-14s", "Init. Hash") + String.format("%-14s", "Hash/Index") + String.format("%-3s","Probe"));
 		for (String s: h.getKeyList()){
@@ -337,33 +386,56 @@ class hashTable {
 
 		// OPTION C(C)
 		h.resetTable();
+		capacity = (int)(h.getCapacity()*0.5);
 		h.fillList(h.getCapacity());
 		System.out.println("\nSolution of OPTION C(C) PART I\n");
-		for (i = 0; i < h.getCapacity()*0.5; i++) {
+		for (i = 0; i < capacity; i++) {
 			key = list[i];
 			h.putValueRandom(key, i+1);
+
+			if (i < 30) {
+				first30[i] = key;
+			}
+
+			if ((capacity - i) <= 30) {
+				last30[30 - (capacity - i)] = key;
+			}
 		}
 
 		// reset the variable
-		i = 0;
-		minProbe = h.getCapacity();;
-		maxProbe = 0;
-		sumProbe = 0;
-		for (String s: h.getKeyList()){
-			i++;
-			if (h.getProbeRandom(s) < minProbe) {
-				minProbe = h.getProbeRandom(s);
+		fminProbe = h.getCapacity();
+		lminProbe = h.getCapacity();
+		fmaxProbe = 0;
+		lmaxProbe = 0;
+		fsumProbe = 0;
+		lsumProbe = 0;
+		for (int k = 0; k < 30; k++) {
+			String f = first30[k];
+			String l = last30[k];
+			if (h.getProbeRandom(f) < fminProbe) {
+				fminProbe = h.getProbeRandom(f);
 			}
-			if (h.getProbeRandom(s) > maxProbe) {
-				maxProbe = h.getProbeRandom(s);
+			if (h.getProbeRandom(l) < lminProbe) {
+				lminProbe = h.getProbeRandom(l);
 			}
-			sumProbe = sumProbe + h.getProbeRandom(s);
-			if (i == 30) break;
+			if (h.getProbeRandom(f) > fmaxProbe) {
+				fmaxProbe = h.getProbeRandom(f);
+			}
+			if (h.getProbeRandom(l) > lmaxProbe) {
+				lmaxProbe = h.getProbeRandom(l);
+			}
+			fsumProbe = fsumProbe + h.getProbeRandom(f);
+			lsumProbe = lsumProbe + h.getProbeRandom(l);
 		}
 
-		System.out.println("Minimum Probe: " + minProbe);
-		System.out.println("Maximum Probe: " + maxProbe);
-		System.out.println("Average Probe: " + String.format("%.3g%n", (float)sumProbe/30));
+		System.out.println("For first 30 inserted Keys\n");
+		System.out.println("Minimum Probe: " + fminProbe);
+		System.out.println("Maximum Probe: " + fmaxProbe);
+		System.out.println("Average Probe: " + String.format("%.3g%n", (float)fsumProbe/30));
+		System.out.println("For last 30 inserted Keys\n");
+		System.out.println("Minimum Probe: " + lminProbe);
+		System.out.println("Maximum Probe: " + lmaxProbe);
+		System.out.println("Average Probe: " + String.format("%.3g%n", (float)lsumProbe/30));
 
 		System.out.println(String.format("%-6s","S.N.") + String.format("%-17s","Key") + String.format("%-14s", "Init. Hash") + String.format("%-14s", "Hash/Index") + String.format("%-3s","Probe"));
 		for (String s: h.getKeyList()){
@@ -371,33 +443,56 @@ class hashTable {
 		}
 
 		h.resetTable();
+		capacity = (int)(h.getCapacity()*0.9);
 		h.fillList(h.getCapacity());
 		System.out.println("\nSolution of OPTION C(C) PART II\n");
-		for (i = 0; i < h.getCapacity()*0.9; i++) {
+		for (i = 0; i < capacity; i++) {
 			key = list[i];
 			h.putValueRandom(key, i+1);
+
+			if (i < 30) {
+				first30[i] = key;
+			}
+
+			if ((capacity - i) <= 30) {
+				last30[30 - (capacity - i)] = key;
+			}
 		}
 
 		// reset the variable
-		i = 0;
-		minProbe = h.getCapacity();;
-		maxProbe = 0;
-		sumProbe = 0;
-		for (String s: h.getKeyList()){
-			i++;
-			if (h.getProbeRandom(s) < minProbe) {
-				minProbe = h.getProbeRandom(s);
+		fminProbe = h.getCapacity();
+		lminProbe = h.getCapacity();
+		fmaxProbe = 0;
+		lmaxProbe = 0;
+		fsumProbe = 0;
+		lsumProbe = 0;
+		for (int k = 0; k < 30; k++) {
+			String f = first30[k];
+			String l = last30[k];
+			if (h.getProbeRandom(f) < fminProbe) {
+				fminProbe = h.getProbeRandom(f);
 			}
-			if (h.getProbeRandom(s) > maxProbe) {
-				maxProbe = h.getProbeRandom(s);
+			if (h.getProbeRandom(l) < lminProbe) {
+				lminProbe = h.getProbeRandom(l);
 			}
-			sumProbe = sumProbe + h.getProbeRandom(s);
-			if (i == 30) break;
+			if (h.getProbeRandom(f) > fmaxProbe) {
+				fmaxProbe = h.getProbeRandom(f);
+			}
+			if (h.getProbeRandom(l) > lmaxProbe) {
+				lmaxProbe = h.getProbeRandom(l);
+			}
+			fsumProbe = fsumProbe + h.getProbeRandom(f);
+			lsumProbe = lsumProbe + h.getProbeRandom(l);
 		}
 
-		System.out.println("Minimum Probe: " + minProbe);
-		System.out.println("Maximum Probe: " + maxProbe);
-		System.out.println("Average Probe: " + String.format("%.3g%n", (float)sumProbe/30));
+		System.out.println("For first 30 inserted Keys\n");
+		System.out.println("Minimum Probe: " + fminProbe);
+		System.out.println("Maximum Probe: " + fmaxProbe);
+		System.out.println("Average Probe: " + String.format("%.3g%n", (float)fsumProbe/30));
+		System.out.println("For last 30 inserted Keys\n");
+		System.out.println("Minimum Probe: " + lminProbe);
+		System.out.println("Maximum Probe: " + lmaxProbe);
+		System.out.println("Average Probe: " + String.format("%.3g%n", (float)lsumProbe/30));
 
 		System.out.println(String.format("%-6s","S.N.") + String.format("%-17s","Key") + String.format("%-14s", "Init. Hash") + String.format("%-14s", "Hash/Index") + String.format("%-3s","Probe"));
 		for (String s: h.getKeyList()){
